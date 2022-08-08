@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class EEE {
-    private static final String WHITELIST = "()（）,.，。:：;；?？'‘’\"“”[]【】{}「」『』";
+    private static final String WHITELIST = "()（）,.!，。！:：;；?？'‘’\"“”[]【】{}「」『』";
     private static final int MAX_SIZE = 2 << 16;    // 128K
     private static final LinkedHashMap<String, String> LRU_CACHE = new LinkedHashMap<String, String>(32767, 0.75f, true) {
         @Override

@@ -1,0 +1,20 @@
+modLoader="javafml"
+loaderVersion='(0,)'
+license='WTFPL'
+
+[[mods]]
+modId='eeemod'
+version='${file.jarVersion}'
+displayName='eeeeeeeeee'
+description='eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+authors='teddyxlandlee'
+credits='Thanks PercyDan for providing original idea'
+logoFile='44cf9030-c049-459b-868b-d679dad3c8bd.png'
+
+[[dependencies.eeemod]]
+modId='enchlevellangpatch'
+mandatory=true
+versionRange='[1,2)'
+ordering='NONE'
+side='CLIENT'
+

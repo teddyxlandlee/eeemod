@@ -1,0 +1,24 @@
+{
+  schema_version: 1,
+  quilt_loader: {
+    group_id: "wiki.mcbbs.mod",
+    mod_id: "eeemod",
+    version: "${version}",
+    entrypoints: {
+      client: "wiki.mcbbs.mod.eee.EEE::init",
+    },
+    metadata: {
+      name: "eeeeeeeeee",
+      description: "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      contributors: {
+        "teddyxlandlee": "Code (Remake)",
+        "PercyDan": "Original Author",
+      },
+      license: "WTFPL",
+      icon: "44cf9030-c049-459b-868b-d679dad3c8bd.png",
+    },
+    depends: {
+      "enchlevel-langpatch": ">1"
+    },
+  },
+}

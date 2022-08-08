@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "eeemod",
+  "version": "${version}",
+  "name": "eeeeeeeeee",
+  "description": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "authors": [
+    "teddyxlandlee"
+  ],
+  "contributors": [
+    "PercyDan"
+  ],
+  "entrypoints": {
+    "client": [
+      "wiki.mcbbs.mod.eee.EEE::init"
+    ]
+  },
+  "license": "WTFPL",
+  "icon": "44cf9030-c049-459b-868b-d679dad3c8bd.png",
+  "depends": {
+    "enchlevel-langpatch": ">1"
+  }
+}

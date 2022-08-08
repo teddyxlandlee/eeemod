@@ -37,6 +37,6 @@ public class EEE {
         EnchantmentLevelLangPatch.registerEnchantmentPatch("eeemod:eee", patch);
         EnchantmentLevelLangPatch.registerPotionPatch("eeemod:eee", patch);
         EnchantmentLevelLangPatchConfig.setCurrentEnchantmentHooks(patch);
-        EnchantmentLevelLangPatchConfig.setCurrentEnchantmentHooks(patch);
+        EnchantmentLevelLangPatchConfig.setCurrentPotionHooks(patch);
     }
 }

@@ -20,7 +20,7 @@ plugins {
 }
 
 group = "wiki.mcbbs.mod"
-version = "2.0.3"
+version = "2.0.4"
 
 repositories {
     mavenLocal()
@@ -33,6 +33,7 @@ repositories {
     maven(url = "https://maven.terraformersmc.com/releases/") {
         name = "TerraformersMC"
     }
+    mavenCentral()
 }
 
 tasks.compileJava {
@@ -41,11 +42,11 @@ tasks.compileJava {
 }
 
 dependencies {
-    compileOnly(files("libs/fakerl2.jar"))
-    compileOnly("xland.mcmod:enchlevel-langpatch:1.0.1")
-    compileOnly("org.apache.commons:commons-lang3:3.5")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    //compileOnly(files("libs/fakerl2.jar"))
+    compileOnly("xland.mcmod:enchlevel-langpatch:1.2.0:api")
+    //compileOnly("org.apache.commons:commons-lang3:3.5")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
 }
 
 object Constants {

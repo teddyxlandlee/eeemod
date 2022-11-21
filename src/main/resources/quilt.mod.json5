@@ -21,4 +21,8 @@
       "enchlevel-langpatch": ">1"
     },
   },
+  "enchlevel-langpatch-conf3": {
+    "no_override_enchantment": true,
+    "no_override_potion": true,
+  },
 }

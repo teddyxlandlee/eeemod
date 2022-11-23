@@ -1,9 +1,9 @@
-import org.codehaus.groovy.runtime.ResourceGroovyMethods
 import org.objectweb.asm.ClassWriter
-import org.objectweb.asm.Label
+import org.objectweb.asm.Handle
+import xland.gradle.forgeInitInjector.TargetMethodGen
+import xland.gradle.forgeInitInjector.registerStackTopToModBus
+import xland.gradle.forgeInitInjector.subscribeEvent
 import org.objectweb.asm.Opcodes as ops
-
-import java.nio.file.Files
 
 buildscript {
     repositories {
@@ -17,11 +17,12 @@ buildscript {
 }
 
 plugins {
-    id("java")
+    java
+    id("xland.gradle.forge-init-injector") version "1.0.4"
 }
 
 group = "wiki.mcbbs.mod"
-version = "2.0.6"
+version = "2.1.0"
 
 repositories {
     mavenLocal()
@@ -50,13 +51,43 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
 }
 
-object Constants {
-    const val pkg = "WmILjFiPRJHZhS7zflHaI"
-    const val modId = "eeemod"
-    const val mainClass = "wiki/mcbbs/mod/eee/EEE"
+forgeInitInjector {
+    modId = "eeemod"
+    stubPackage = "StbnzKslE0xJZ9V\$4syOI"
+    setClientEntrypoint("wiki/mcbbs/mod/eee/EEE")
+    subscriptions.addClassPredicate("xland.mcmod.enchlevellangpatch.ext.conf3.forge.LangPatchConfigForge",
+            TargetMethodGen { owner, cv, definer, namer ->
+                val stubClassName = "$stubPackage/${namer.next()}"
+                ClassWriter(3).also { writer ->
+                    writer.visit(ops.V1_8, ops.ACC_PUBLIC + ops.ACC_SUPER, stubClassName, null,
+                            "java/lang/Object", null)
+                    writer.visitMethod(ops.ACC_PUBLIC + ops.ACC_STATIC, "register",
+                            "(Lxland/mcmod/enchlevellangpatch/ext/conf3/forge/LangPatchConfigOverrideEvent;)V",
+                            null, null).run {
+                        subscribeEvent(this)
+                        visitCode()
+                        visitVarInsn(ops.ALOAD, 0)
+                        visitMethodInsn(ops.INVOKEVIRTUAL, "xland/mcmod/enchlevellangpatch/ext/conf3/forge/LangPatchConfigOverrideEvent",
+                            "terminateAll", "()V", false)
+                        visitInsn(ops.RETURN)
+                        visitEnd()
+                    }
+                }.also { definer.accept(stubClassName, it) }
+
+                val wrapperMethod = namer.next()
+                cv.visitMethod(ops.ACC_STATIC, wrapperMethod, "()V", null, null).run {
+                    visitCode()
+                    visitLdcInsn(org.objectweb.asm.Type.getObjectType(stubClassName))
+                    registerStackTopToModBus(this)
+                    visitInsn(ops.RETURN)
+                    visitEnd()
+                }
+
+                Handle(ops.H_INVOKESTATIC, owner, wrapperMethod, "()V", false)
+            })
 }
 
-task("generateModClass") {
+/*task("generateModClass") {
     val rootDir = tasks.processResources.get().destinationDir
     ResourceGroovyMethods.deleteDir(rootDir.resolve(Constants.pkg))
     Files.createDirectories(rootDir.resolve(Constants.pkg).toPath())
@@ -90,19 +121,21 @@ task("generateModClass") {
         visitInsn(ops.RETURN)
         visitLabel(b01)
         visitLineNumber(1002, b01)
-        visitLdcInsn("xland.mcmod.enchlevellangpatch.ext.conf3.forge.LangPatchConfigOverrideEvent")
+        visitLdcInsn("xland.mcmod.enchlevellangpatch.ext.conf3.forge.LangPatchConfigForge")
         visitMethodInsn(ops.INVOKESTATIC, "java/lang/Class", "forName", "(Ljava/lang/String;)Ljava/lang/Class;", false)
         visitInsn(ops.POP)
         visitLabel(b02)
         visitLineNumber(1003, b02)
         visitTryCatchBlock(b01, b02, b03, "java/lang/ClassNotFoundException")
         visitMethodInsn(ops.INVOKESTATIC, "net/minecraftforge/fml/javafmlmod/FMLJavaModLoadingContext", "get",
-            "()Lnet/minecraftforge/fml/javafmlmod/FMLJavaModLoadingContext", false)
+            "()Lnet/minecraftforge/fml/javafmlmod/FMLJavaModLoadingContext;", false)
         visitMethodInsn(ops.INVOKEVIRTUAL, "net/minecraftforge/fml/javafmlmod/FMLJavaModLoadingContext", "getModEventBus",
             "()Lnet/minecraftforge/eventbus/api/IEventBus;", false)
         visitLdcInsn(org.objectweb.asm.Type.getObjectType("${Constants.pkg}/C"))
         visitMethodInsn(ops.INVOKEINTERFACE, "net/minecraftforge/eventbus/api/IEventBus", "register",
             "(Ljava/lang/Object;)V", true)
+        visitInsn(ops.RETURN)
+        visitMaxs(-1, -1)
     }
     // Abnormal END
 
@@ -169,7 +202,7 @@ task("generateModClass") {
         visitMethodInsn(ops.INVOKEVIRTUAL, "xland/mcmod/enchlevellangpatch/ext/conf3/forge/LangPatchConfigOverrideEvent",
             "terminateAll", "()V", false)
         visitInsn(ops.RETURN)
-        visitAnnotation("Lnet/minecraftforge/eventbus/api/SubscribeEvent;", true)
+        //visitAnnotation("Lnet/minecraftforge/eventbus/api/SubscribeEvent;", true)
         visitMaxs(-1, -1)
     }
     cw.visitMethod(ops.ACC_PUBLIC, "<init>", "()V", null, null).run {
@@ -181,10 +214,10 @@ task("generateModClass") {
     cw.visitSource(null, "ASM Generated")
     rootDir.resolve("${Constants.pkg}/C.class").writeBytes(cw.toByteArray())
     // Abnormal END
-}
+}*/
 
 tasks.processResources {
-    dependsOn("generateModClass")
+    //dependsOn("generateModClass")
     inputs.property("version", project.version)
     filesMatching(listOf("fabric.mod.json", "quilt.mod.json5")) {
         expand("version" to project.version)

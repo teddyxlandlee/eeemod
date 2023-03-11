@@ -15,12 +15,6 @@
       "wiki.mcbbs.mod.eee.EEE::init"
     ]
   },
-  "custom": {
-    "enchlevel-langpatch-conf3": {
-      "no_override_enchantment": true,
-      "no_override_potion": true
-    }
-  },
   "license": "WTFPL",
   "icon": "44cf9030-c049-459b-868b-d679dad3c8bd.png",
   "depends": {

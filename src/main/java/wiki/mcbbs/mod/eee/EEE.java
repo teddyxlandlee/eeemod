@@ -1,7 +1,6 @@
 package wiki.mcbbs.mod.eee;
 
 import xland.mcmod.enchlevellangpatch.api.EnchantmentLevelLangPatch;
-import xland.mcmod.enchlevellangpatch.api.EnchantmentLevelLangPatchConfig;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,12 +16,12 @@ public class EEE {
     };
 
     public static void init() {
-        EnchantmentLevelLangPatch patch = (translationStorage, key) -> {
-            final String s = translationStorage.getOrDefault(key, key);
-            String k = LRU_CACHE.get(s);
+        EnchantmentLevelLangPatch.registerPatch(s -> true, (translationStorage, key) -> {
+            final String s1 = translationStorage.getOrDefault(key, key);
+            String k = LRU_CACHE.get(s1);
             if (k != null) return k;
 
-            final char[] chars = s.toCharArray();
+            final char[] chars = s1.toCharArray();
             for (int i = 0; i < chars.length; i++) {
                 final char c = chars[i];
                 if (!Character.isWhitespace(c) && WHITELIST.indexOf(c) < 0) {
@@ -30,13 +29,9 @@ public class EEE {
                 }
             }
             k = String.valueOf(chars).intern();
-            LRU_CACHE.put(s, k);
+            LRU_CACHE.put(s1, k);
             return k;
-        };
-        EnchantmentLevelLangPatch.registerPatch(s->true, patch);
-        EnchantmentLevelLangPatch.registerEnchantmentPatch("eeemod:eee", patch);
-        EnchantmentLevelLangPatch.registerPotionPatch("eeemod:eee", patch);
-        EnchantmentLevelLangPatchConfig.setCurrentEnchantmentHooks(patch);
-        EnchantmentLevelLangPatchConfig.setCurrentPotionHooks(patch);
+        });
+        // Config override is no longer required, because LangPatch applies configs in the very end.
     }
 }

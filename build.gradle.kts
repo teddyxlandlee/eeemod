@@ -62,7 +62,7 @@ forgeInitInjector {
 tasks.processResources {
     //dependsOn("generateModClass")
     inputs.property("version", project.version)
-    filesMatching(listOf("fabric.mod.json", "quilt.mod.json5")) {
+    filesMatching(listOf("fabric.mod.json", "quilt.mod.json5", "META-INF/mods.toml")) {
         expand("version" to project.version)
     }
 }

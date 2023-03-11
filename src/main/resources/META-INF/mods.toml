@@ -4,7 +4,7 @@ license='WTFPL'
 
 [[mods]]
 modId='eeemod'
-version='${file.jarVersion}'
+version='${version}'
 displayName='eeeeeeeeee'
 description='eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 authors='teddyxlandlee'

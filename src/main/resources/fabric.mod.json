@@ -11,7 +11,7 @@
     "PercyDan"
   ],
   "entrypoints": {
-    "client": [
+    "enchlevel-langpatch.init": [
       "wiki.mcbbs.mod.eee.EEE::init"
     ]
   },

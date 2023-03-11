@@ -5,7 +5,7 @@
     mod_id: "eeemod",
     version: "${version}",
     entrypoints: {
-      client: "wiki.mcbbs.mod.eee.EEE::init",
+      'enchlevel-langpatch.init': "wiki.mcbbs.mod.eee.EEE::init",
     },
     metadata: {
       name: "eeeeeeeeee",
@@ -20,9 +20,5 @@
     depends: {
       "enchlevel-langpatch": ">1"
     },
-  },
-  "enchlevel-langpatch-conf3": {
-    "no_override_enchantment": true,
-    "no_override_potion": true,
   },
 }

@@ -38,6 +38,7 @@ repositories {
 tasks.compileJava {
     sourceCompatibility = "1.8"
     targetCompatibility = "1.8"
+    options.encoding = "UTF-8"
 }
 
 dependencies {

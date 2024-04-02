@@ -1,7 +1,7 @@
 pluginManagement {
     repositories {
-        maven("https://covid-trump.github.io/mvn") {
-            name = "COVID-Trump"
+       // Formerly COVID-Trump maven("https://mvn.7c7.icu/") {
+            name = "7c7maven"
         }
         maven (url = "https://maven.aliyun.com/repository/public") {
             name = "Aliyun Mirror"

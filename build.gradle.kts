@@ -15,11 +15,11 @@ buildscript {
 
 plugins {
     java
-    id("xland.gradle.forge-init-injector") version "1.0.5"
+    id("xland.gradle.forge-init-injector") version "1.1.0"
 }
 
 group = "wiki.mcbbs.mod"
-version = "2.2.0"
+version = "2.3.0"
 
 repositories {
     mavenLocal()
@@ -50,6 +50,7 @@ dependencies {
 forgeInitInjector {
     modId = "eeemod"
     stubPackage = "StbnzKslE0xJZ9V\$4syOI"
+    supportNeo = true
     //setClientEntrypoint("wiki/mcbbs/mod/eee/EEE")
     subscriptions.addClassPredicate("xland.mcmod.enchlevellangpatch.api.EnchantmentLevelLangPatch",
         TargetMethodGen { _, _, _, _ ->

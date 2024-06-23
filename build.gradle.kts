@@ -15,18 +15,18 @@ buildscript {
 
 plugins {
     java
-    id("xland.gradle.forge-init-injector") version "1.1.0"
+    id("xland.gradle.forge-init-injector") version "1.1.1"
 }
 
 group = "wiki.mcbbs.mod"
-version = "2.3.0"
+version = "2.3.1"
 
 repositories {
     mavenLocal()
     maven(url = "https://maven.aliyun.com/repository/public") {
         name = "Aliyun Mirror"
     }
-    maven(url = "https://covid-trump.github.io/mvn/") {
+    maven(url = "https://mvn.7c7.icu") {
         name = "COVID-Trump"
     }
     maven(url = "https://maven.terraformersmc.com/releases/") {
@@ -51,7 +51,7 @@ dependencies {
 forgeInitInjector {
     modId = "eeemod"
     stubPackage = "StbnzKslE0xJZ9V\$4syOI"
-    supportNeo = true
+    neoFlag("pre_20_5", "post_20_5")
     //setClientEntrypoint("wiki/mcbbs/mod/eee/EEE")
     subscriptions.addClassPredicate("xland.mcmod.enchlevellangpatch.api.EnchantmentLevelLangPatch",
         TargetMethodGen { _, _, _, _ ->
@@ -64,7 +64,7 @@ forgeInitInjector {
 tasks.processResources {
     //dependsOn("generateModClass")
     inputs.property("version", project.version)
-    filesMatching(listOf("fabric.mod.json", "quilt.mod.json5", "META-INF/mods.toml")) {
+    filesMatching(listOf("fabric.mod.json", "quilt.mod.json5", "META-INF/mods.toml", "META-INF/neoforge.mods.toml")) {
         expand("version" to project.version)
     }
 }
